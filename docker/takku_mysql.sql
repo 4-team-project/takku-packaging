@@ -1,7 +1,17 @@
 -- 1. 계정 및 DB 생성 (root 계정에서 실행해야 함)
-CREATE USER IF NOT EXISTS 'takku'@'localhost' IDENTIFIED BY 'takku1234';
-CREATE DATABASE IF NOT EXISTS takku_db DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
-GRANT ALL PRIVILEGES ON takku_db.* TO 'takku'@'localhost';
+CREATE DATABASE IF NOT EXISTS takku_db
+  DEFAULT CHARACTER SET utf8mb4
+  COLLATE utf8mb4_general_ci;
+
+-- 기존 유저 삭제 (중복 방지)
+DROP USER IF EXISTS 'takku'@'localhost';
+DROP USER IF EXISTS 'takku'@'%';
+
+-- 외부 접속 가능한 유저 생성
+CREATE USER 'takku'@'%' IDENTIFIED BY 'takku1234';
+
+-- 권한 부여
+GRANT ALL PRIVILEGES ON takku_db.* TO 'takku'@'%';
 FLUSH PRIVILEGES;
 
 -- 2. 사용할 DB 선택
