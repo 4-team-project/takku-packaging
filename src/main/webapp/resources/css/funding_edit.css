@@ -1,0 +1,425 @@
+/* 전체 페이지 컨테이너 */
+.page-container {
+	display: flex;
+	justify-content: center; /* 수평 중앙 정렬 */
+	align-items: flex-start; /* 수직 상단 정렬 */
+	min-height: 100vh; /* 뷰포트 높이만큼 최소 높이 설정 */
+	font-family: 'Spoqa Han Sans Neo';
+}
+
+textarea::placeholder {
+	font-weight: bold;
+	font-family: 'Spoqa Han Sans Neo';
+}
+
+/* 폼 컨테이너 */
+.edit-funding-container {
+	width: 100%;
+	max-width: 800px; /* 최대 너비 설정 (반응형) */
+	box-sizing: border-box;
+}
+
+/* 폼 제목 */
+.edit-funding-container h2 {
+	font-size: 2em;
+	color: #333;
+	text-align: center;
+	margin-bottom: 30px;
+	font-weight: 700;
+}
+
+/* 펀딩 상태 및 수정 가능 여부 출력 */
+.fundingName {
+	color: #FF9670;
+}
+
+.editordelete {
+	color: #FF4400;
+}
+
+.disabled-message {
+	font-weight: bold;
+	font-size: 28px;
+}
+
+/* 폼 그룹 (라벨 + 입력 필드) */
+.form-group {
+	margin-bottom: 25px; /* 각 폼 그룹 간의 간격 */
+}
+
+.form-group label {
+	display: block; /* 라벨이 한 줄 전체를 차지하도록 */
+	font-size: 25px;
+	color: #FF9670;
+	font-weight: bold;
+	margin-bottom: 8px; /* 라벨과 입력 필드 사이 간격 */
+	font-weight: 600;
+	font-weight: bold;
+}
+
+.form-group input[type="text"], .form-group select, .form-group textarea,
+	.form-group input[type="number"] {
+	width: 100%; /* 너비를 100%로 설정하여 부모 요소에 꽉 차도록 */
+	padding: 12px 15px;
+	border: 1px solid #ddd;
+	border-radius: 8px; /* 입력 필드 둥근 모서리 */
+	font-size: 18px;
+	color: #333;
+	transition: border-color 0.3s ease, box-shadow 0.3s ease;
+	/* 호버/포커스 시 부드러운 전환 */
+	box-sizing: border-box; /* 패딩이 너비에 포함되도록 */
+	font-family: 'Spoqa Han Sans Neo';
+}
+
+/* input-with-unit-wrapper 컨테이너 스타일 - 기존 유지 */
+.input-with-unit-wrapper {
+	position: relative;
+	display: flex;
+	align-items: center;
+	width: 100%;
+	border: 1px solid #ddd;
+	border-radius: 8px;
+	box-sizing: border-box;
+	transition: border-color 0.3s ease, box-shadow 0.3s ease,
+		background-color 0.3s ease;
+	background-color: #ffffff;
+}
+
+/* 새로 추가된 input-and-unit 그룹 (input과 그 바로 옆 단위를 묶음) */
+.input-with-unit-wrapper .input-and-unit {
+	display: flex;
+	align-items: center;
+	flex-grow: 1; /* 이 그룹이 남은 공간을 모두 차지 */
+	padding-left: 15px; /* 왼쪽 시작 여백 */
+}
+
+/* 실제 input 스타일 */
+.input-with-unit-wrapper .input-and-unit input[type="text"] {
+	/* ★ type="text"로 변경 */
+	flex-grow: 1; /* input이 남은 공간을 최대한 차지 */
+	border: none;
+	padding: 12px 0; /* 상하 패딩만 남김. 좌우 패딩은 input-and-unit이 담당 */
+	font-size: 18px;
+	color: #333;
+	outline: none;
+	background-color: transparent;
+	text-align: left; /* ★ 숫자와 플레이스홀더 모두 왼쪽 정렬 유지 */
+	width: auto; /* 내용에 따라 너비 조절 (flex-grow가 더 중요) */
+	min-width: 0; /* Flexbox 내에서 최소 너비 설정 */
+	box-sizing: border-box;
+}
+
+/* input[type="text"]의 placeholder 스타일 (필요 시) */
+.input-with-unit-wrapper .input-and-unit input[type="text"]::placeholder
+	{
+	text-align: left; /* placeholder도 왼쪽 정렬 */
+	color: #999;
+}
+
+/* wrapper가 포커스 되었을 때 (내부 input 포커스 시) - 유지 */
+.input-with-unit-wrapper:focus-within {
+	border-color: #007bff;
+	box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+}
+
+/* '개' 단위 텍스트 (.unit-text) */
+.input-with-unit-wrapper .input-and-unit .unit-text {
+	white-space: nowrap;
+	color: #555;
+	font-size: 18px;
+	margin-left: 5px; /* ★ input과 '개' 사이 간격 (양수 마진) */
+	padding-right: 15px; /* ★ 이 텍스트 자체의 오른쪽 패딩 (전체 wrapper의 끝과의 간격) */
+}
+
+/* '%' 기호 (.discount-unit-text) */
+.input-with-unit-wrapper .input-and-unit .discount-unit-text {
+	white-space: nowrap;
+	color: #555;
+	font-size: 18px;
+	margin-left: 5px; /* ★ input과 '%' 사이 간격 (양수 마진) */
+}
+
+/* '(원가 : ${price})' 정보 (.price-info-text) */
+.input-with-unit-wrapper .price-info-text {
+	white-space: nowrap;
+	color: #888;
+	font-size: 18px;
+	margin-left: 10px; /* '%'와 원가 정보 사이 간격 (flex item 간의 마진) */
+	padding-right: 15px; /* 전체 Wrapper 오른쪽 패딩 */
+}
+
+/* #dateRangePicker 관련 스타일 - 이대로 유지 */
+#dateRangePicker {
+	background-color: #e9ecef;
+	border-color: #e9ecef;
+	box-shadow: none;
+}
+
+/* ---- DISABLED 상태 스타일 ---- ( readonly-wrapper 관련 CSS는 제거 ) */
+/* disabled-wrapper 클래스가 붙었을 때 전체 wrapper의 스타일 */
+.input-with-unit-wrapper.disabled-wrapper {
+	background-color: #e9ecef;
+	border-color: #e9ecef;
+	box-shadow: none;
+}
+
+/* disabled-wrapper 내의 input[type="text"] */
+.input-with-unit-wrapper.disabled-wrapper input[type="text"] {
+	/* ★ type="text"로 변경 */
+	background-color: transparent;
+	color: #6c757d;
+}
+
+/* disabled-wrapper 내의 .unit-text 등 */
+.input-with-unit-wrapper.disabled-wrapper .unit-text,
+	.input-with-unit-wrapper.disabled-wrapper .discount-unit-text,
+	.input-with-unit-wrapper.disabled-wrapper .price-info-text {
+	color: #888;
+	opacity: 0.7;
+}
+
+/* disabled 상태일 때 포커스 효과 제거 */
+.input-with-unit-wrapper.disabled-wrapper:focus-within {
+	border-color: #e9ecef;
+	box-shadow: none;
+}
+
+.form-group input[type="text"]:focus, .form-group select:focus,
+	.form-group textarea:focus {
+	border-color: #007bff; /* 포커스 시 파란색 테두리 */
+	box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25); /* 포커스 시 그림자 효과 */
+	outline: none; /* 기본 아웃라인 제거 */
+}
+
+.form-group textarea {
+	resize: vertical; /* 수직으로만 크기 조절 가능하도록 */
+	min-height: 100px; /* 최소 높이 */
+}
+
+.btn-container {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	width: 100%;
+	padding-top: 20px;
+}
+
+.btn {
+	border: 2px solid #ff9670;
+	background: transparent;
+	color: #ff9670;
+	width: 200px;
+	border-radius: 6px;
+	cursor: pointer;
+	font-size: 30px;
+	font-weight: bold;
+}
+
+.btn:hover {
+	background-color: #ff9670;
+	color: white;
+}
+
+.btn.filled {
+	background-color: #ff9670;
+	color: white;
+}
+
+.btn.filled:hover {
+	background-color: #fdd4c2;
+	color: white;
+}
+
+/* 추가적인 요소 스타일 (예: 에러 메시지) */
+.error-message {
+	color: #dc3545;
+	font-size: 0.9em;
+	margin-top: 5px;
+}
+
+.preview-image {
+	position: relative;
+	display: inline-block;
+	border: 1px solid #ddd;
+	border-radius: 5px;
+	overflow: hidden; /* 이미지가 튀어나오지 않도록 */
+}
+
+.preview-image img {
+	display: block;
+	width: 100px; /* 고정 크기 */
+	height: 100px;
+	object-fit: cover;
+}
+
+.remove-image-btn {
+	position: absolute;
+	top: 0px;
+	right: 0px;
+	background: rgba(255, 0, 0, 0.7);
+	color: white;
+	border: none;
+	border-radius: 0 0 0 5px; /* 오른쪽 위만 둥글게 */
+	padding: 2px 6px;
+	font-weight: bold;
+	line-height: 1; /* x 버튼 세로 가운데 정렬 */
+}
+
+.remove-image-btn:hover {
+	background: rgba(255, 0, 0, 1);
+}
+
+.pictureBtn {
+	display: flex;
+	align-items: center;
+	gap: 10px; /* 버튼 사이 간격 */
+	margin-top: 10px;
+}
+
+/* 버튼 스타일 통일 */
+#btnAddPhoto, #btnDefaultPhoto {
+	padding: 8px 16px;
+	background-color: #ff9670;
+	color: white;
+	border: none;
+	border-radius: 6px;
+	font-size: 20px;
+	transition: background-color 0.2s ease;
+}
+
+#btnAddPhoto:hover, #btnDefaultPhoto:hover {
+	background-color: #ff783e;
+}
+
+#previewContainer {
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.preview-image {
+	display: flex;
+	flex-direction: column;
+	width: 250px;
+	margin: 10px;
+}
+
+.preview-image img {
+	flex-wrap: wrap;
+	width: 250px;
+	height: 250px;
+	border-radius: 8px;
+	object-fit: contain;
+	background-color: #f8f8f8;
+	margin-bottom: 5px;
+}
+
+.preview-image button {
+	background-color: #ff7675;
+	color: white;
+	border: none;
+	padding: 5px 10px;
+	border-radius: 6px;
+	font-size: 13px;
+}
+
+.btn-check {
+	padding: 12px 14px;
+	border: 2px solid #ff9670;
+	background-color: transparent;
+	color: #ff9670;
+	border-radius: 6px;
+	font-size: 24px;
+	font-weight: bold;
+	transition: background-color 0.2s;
+}
+
+.btn-check:hover {
+	background-color: #ff9670;
+	color: white;
+}
+
+.btn-container {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	width: 100%;
+	padding-top: 20px;
+}
+
+.btn {
+	border: 2px solid #ff9670;
+	background: transparent;
+	color: #ff9670;
+	width: 200px;
+	border-radius: 6px;
+	font-size: 30px;
+	font-weight: bold;
+	text-align: center;
+}
+
+.btn:hover {
+	background-color: #ff9670;
+	color: white;
+}
+
+#resultModal {
+	display: none;
+	position: fixed;
+	top: 40%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	background: #ffffff;
+	padding: 30px 30px 20px 30px;
+	border-radius: 12px;
+	box-shadow: 0 4px 12px rgba(255, 150, 112, 0.5); /* 주황색 느낌 그림자 */
+	z-index: 9999;
+	width: 400px;
+	text-align: center;
+	font-family: 'Noto Sans KR', sans-serif;
+}
+
+#resultModal p {
+	margin: 0;
+	font-size: 18px;
+	color: #ff9670; /* 진한 주황색 글씨 */
+	font-weight: bold;
+}
+
+#closeModalBtn {
+	margin-top: 20px;
+	padding: 8px 18px;
+	background-color: #ff9670; /* 주황색 버튼 */
+	color: white;
+	border: none;
+	border-radius: 8px;
+	font-weight: bold;
+	font-size: 20px;
+	transition: background-color 0.3s ease;
+}
+
+#closeModalBtn:hover {
+	background-color: #fdd4c2; /* 좀 더 밝은 주황색 호버 */
+}
+
+/* 모달 배경 */
+#modalBackdrop {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(0, 0, 0, 0.4);
+	z-index: 9998;
+	display: none;
+}
+
+.menu-label {
+	font-weight: bold;
+	font-size: 25px;
+	margin-bottom: 10px;
+	color: #ff9670;
+}
+
+p {
+	font-size: 20px;
+}

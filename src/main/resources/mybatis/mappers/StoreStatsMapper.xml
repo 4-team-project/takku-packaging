@@ -1,0 +1,360 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.takku.project.mapper.StoreStatsMapper">
+
+	<!-- ================= 상점 기준 통계 ================= -->
+
+	<!-- 오늘 주문 수 / 오늘 매출 / 진행중 펀딩 수 / 준비중 펀딩 수 -->
+	<select id="countTodayOrdersByStoreId" resultType="int">
+		SELECT
+		COUNT(*)
+		FROM takku_order o
+		JOIN takku_funding f ON o.funding_id =
+		f.funding_id
+		WHERE f.store_id = #{storeId}
+		AND o.status = '결제완료'
+		AND
+		TRUNC(o.purchased_at) = TRUNC(SYSDATE)
+	</select>
+
+	<select id="sumTodaySalesByStoreId" resultType="int">
+		SELECT
+		NVL(SUM(o.amount), 0)
+		FROM takku_order o
+		JOIN takku_funding f ON
+		o.funding_id = f.funding_id
+		WHERE f.store_id = #{storeId}
+		AND o.status =
+		'결제완료'
+		AND TRUNC(o.purchased_at) = TRUNC(SYSDATE)
+	</select>
+
+	<select id="countOngoingFundingsByStoreId" resultType="int">
+		SELECT
+		COUNT(*)
+		FROM takku_funding
+		WHERE store_id = #{storeId}
+		AND status =
+		'진행중'
+	</select>
+
+	<select id="countUpcomingFundingsByStoreId" resultType="int">
+		SELECT
+		COUNT(*)
+		FROM takku_funding
+		WHERE store_id = #{storeId}
+		AND status =
+		'준비중'
+	</select>
+
+	<!-- 유저의 상점 목록 -->
+	<select id="selectStoreListByUserId" parameterType="int"
+		resultType="storeDTO">
+		SELECT * FROM takku_store WHERE user_id = #{user_id}
+	</select>
+
+	<!-- 월별 주문/매출 -->
+	<select id="selectMonthlyOrderStats"
+		resultType="com.takku.project.domain.stats.OrderStatsDTO">
+		SELECT TO_CHAR(o.purchased_at, 'YYYY-MM') AS month,
+		COUNT(*) AS orderCount,
+		NVL(SUM(o.amount), 0) AS revenue
+		FROM takku_order o
+		INNER JOIN takku_funding f ON
+		o.funding_id = f.funding_id
+		WHERE f.store_id = #{storeId}
+		AND o.status =
+		'결제완료'
+		GROUP BY TO_CHAR(o.purchased_at, 'YYYY-MM')
+		ORDER BY month
+	</select>
+
+	<!-- 인기 상품 TOP 5 / 재구매 상품 TOP 5 / 태그별 주문 수 -->
+	<select id="selectPopularProducts"
+		resultType="com.takku.project.domain.stats.PopularProductDTO">
+		SELECT *
+		FROM (
+		SELECT p.product_name AS label,
+		COUNT(o.order_id) AS value
+		FROM takku_order o
+		INNER JOIN takku_funding f ON o.funding_id = f.funding_id
+		INNER JOIN takku_product p ON f.product_id = p.product_id
+		WHERE f.store_id = #{storeId}
+		AND o.status = '결제완료'
+		GROUP BY p.product_name
+		ORDER BY COUNT(o.order_id) DESC
+		)
+		WHERE ROWNUM &lt;= 5
+	</select>
+
+	<select id="getTopRePurchasedProducts"
+		resultType="com.takku.project.domain.stats.ProductRePurchaseDTO">
+		SELECT *
+		FROM (
+		SELECT p.product_name AS productName,
+		COUNT(*) AS rePurchaseCount
+		FROM (
+		SELECT o.user_id, f.product_id
+		FROM takku_order o
+		INNER JOIN takku_funding f ON o.funding_id = f.funding_id
+		WHERE f.store_id = #{storeId}
+		AND o.status = '결제완료'
+		GROUP BY o.user_id, f.product_id
+		HAVING COUNT(*) &gt; 1
+		) re
+		INNER JOIN takku_product p ON re.product_id = p.product_id
+		GROUP BY p.product_name
+		ORDER BY rePurchaseCount DESC
+		)
+		WHERE ROWNUM &lt;= 5
+	</select>
+
+	<select id="selectTagStats"
+		resultType="com.takku.project.domain.stats.TagStatsDTO">
+		SELECT t.tag_name AS label,
+		COUNT(*) AS value
+		FROM takku_order o
+		INNER JOIN takku_funding f ON o.funding_id
+		= f.funding_id
+		INNER JOIN takku_funding_tag ft ON f.funding_id =
+		ft.funding_id
+		INNER JOIN takku_tag t ON ft.tag_id = t.tag_id
+		WHERE
+		f.store_id = #{storeId}
+		AND o.status = '결제완료'
+		GROUP BY t.tag_name
+		ORDER
+		BY COUNT(*) DESC
+	</select>
+
+	<!-- 플랫폼 기준 연령대 분포 / 성별 비율 / 연령대-성별별 인기 태그 -->
+	<select id="selectAgeDistribution"
+		resultType="com.takku.project.domain.stats.LabelValueDTO">
+		SELECT CASE
+		WHEN age BETWEEN 10 AND 19 THEN '10대'
+		WHEN age BETWEEN 20 AND 29 THEN '20대'
+		WHEN age BETWEEN 30 AND 39 THEN '30대'
+		WHEN age BETWEEN 40 AND 49 THEN '40대'
+		ELSE '50대 이상'
+		END AS label,
+		COUNT(*) AS value
+		FROM (
+		SELECT u.user_id,
+		FLOOR(MONTHS_BETWEEN(SYSDATE, u.birth)/12) AS age
+		FROM takku_user u
+		JOIN takku_order o ON u.user_id = o.user_id
+		WHERE o.status = '결제완료'
+		)
+		GROUP BY CASE
+		WHEN age BETWEEN 10 AND 19 THEN '10대'
+		WHEN age BETWEEN 20 AND 29 THEN '20대'
+		WHEN age BETWEEN 30 AND 39 THEN '30대'
+		WHEN age BETWEEN 40 AND 49 THEN '40대'
+		ELSE '50대 이상'
+		END
+		ORDER BY label
+	</select>
+
+	<select id="selectGenderRatio"
+		resultType="com.takku.project.domain.stats.LabelValueDTO">
+		SELECT u.gender AS label,
+		COUNT(*) AS value
+		FROM takku_user u
+		JOIN takku_order o ON u.user_id = o.user_id
+		WHERE o.status = '결제완료'
+		GROUP BY u.gender
+	</select>
+
+	<select id="selectTopTagsByAgeGender"
+		resultMap="AgeGenderTagMap">
+		SELECT age_group, gender, tag_name
+		FROM (
+		SELECT inner_query.age_group,
+		inner_query.gender,
+		inner_query.tag_name,
+		ROW_NUMBER() OVER (PARTITION BY age_group, gender ORDER BY cnt DESC) AS rn
+		FROM (
+		SELECT
+		CASE
+		WHEN FLOOR(MONTHS_BETWEEN(SYSDATE, u.birth)/12) BETWEEN 10 AND 19 THEN
+		'10대'
+		WHEN FLOOR(MONTHS_BETWEEN(SYSDATE, u.birth)/12) BETWEEN 20 AND 29 THEN
+		'20대'
+		WHEN FLOOR(MONTHS_BETWEEN(SYSDATE, u.birth)/12) BETWEEN 30 AND 39 THEN
+		'30대'
+		WHEN FLOOR(MONTHS_BETWEEN(SYSDATE, u.birth)/12) BETWEEN 40 AND 49 THEN
+		'40대'
+		ELSE '50대 이상'
+		END AS age_group,
+		u.gender,
+		t.tag_name,
+		COUNT(*) AS cnt
+		FROM takku_user u
+		JOIN takku_order o ON u.user_id = o.user_id
+		JOIN takku_funding f ON o.funding_id = f.funding_id
+		JOIN takku_funding_tag ft ON f.funding_id = ft.funding_id
+		JOIN takku_tag t ON ft.tag_id = t.tag_id
+		WHERE o.status = '결제완료'
+		GROUP BY
+		CASE
+		WHEN FLOOR(MONTHS_BETWEEN(SYSDATE, u.birth)/12) BETWEEN 10 AND 19 THEN
+		'10대'
+		WHEN FLOOR(MONTHS_BETWEEN(SYSDATE, u.birth)/12) BETWEEN 20 AND 29 THEN
+		'20대'
+		WHEN FLOOR(MONTHS_BETWEEN(SYSDATE, u.birth)/12) BETWEEN 30 AND 39 THEN
+		'30대'
+		WHEN FLOOR(MONTHS_BETWEEN(SYSDATE, u.birth)/12) BETWEEN 40 AND 49 THEN
+		'40대'
+		ELSE '50대 이상'
+		END,
+		u.gender,
+		t.tag_name
+		) inner_query
+		)
+		WHERE rn &lt;= 3
+		ORDER BY age_group, gender, rn
+	</select>
+
+	<!-- ================= 펀딩 기준 통계 ================= -->
+
+	<select id="selectTodayFundingAmount" resultType="int">
+		SELECT
+		NVL(SUM(o.amount), 0)
+		FROM takku_order o
+		WHERE o.funding_id =
+		#{fundingId}
+		AND o.status = '결제완료'
+		AND TRUNC(o.purchased_at) =
+		TRUNC(SYSDATE)
+	</select>
+
+	<select id="selectFundingGenderRatio"
+		resultType="com.takku.project.domain.stats.LabelValueDTO">
+		SELECT u.gender AS label,
+		COUNT(*) AS value
+		FROM takku_order o
+		JOIN takku_user u ON o.user_id = u.user_id
+		WHERE o.funding_id = #{fundingId}
+		AND o.status = '결제완료'
+		GROUP BY
+		u.gender
+	</select>
+
+	<select id="selectFundingAgeDistribution"
+		resultType="com.takku.project.domain.stats.LabelValueDTO">
+		SELECT CASE
+		WHEN age BETWEEN 10 AND 19 THEN '10대'
+		WHEN age BETWEEN 20 AND 29 THEN '20대'
+		WHEN age BETWEEN 30 AND 39 THEN '30대'
+		WHEN age BETWEEN 40 AND 49 THEN '40대'
+		ELSE '50대 이상'
+		END AS label,
+		COUNT(*) AS value
+		FROM (
+		SELECT FLOOR(MONTHS_BETWEEN(SYSDATE, u.birth)/12) AS age
+		FROM takku_order o
+		JOIN takku_user u ON o.user_id = u.user_id
+		WHERE o.funding_id = #{fundingId}
+		AND o.status = '결제완료'
+		)
+		GROUP BY CASE
+		WHEN age BETWEEN 10 AND 19 THEN '10대'
+		WHEN age BETWEEN 20 AND 29 THEN '20대'
+		WHEN age BETWEEN 30 AND 39 THEN '30대'
+		WHEN age BETWEEN 40 AND 49 THEN '40대'
+		ELSE '50대 이상'
+		END
+		ORDER BY label
+	</select>
+
+	<select id="selectFundingCompleteOrderCount" resultType="int">
+		SELECT
+		COUNT(*)
+		FROM takku_order
+		WHERE funding_id = #{fundingId}
+		AND status =
+		'결제완료'
+	</select>
+
+	<select id="selectFundingRefundOrderCount" resultType="int">
+		SELECT
+		COUNT(*)
+		FROM takku_order
+		WHERE funding_id = #{fundingId}
+		AND status =
+		'환불'
+	</select>
+
+	<!-- ================= 상품 기준 통계 ================= -->
+
+	<select id="selectProductMonthlyStats"
+		resultType="com.takku.project.domain.stats.OrderStatsDTO">
+		SELECT TO_CHAR(o.purchased_at, 'YYYY-MM') AS month,
+		COUNT(*) AS orderCount,
+		SUM(o.amount) AS revenue
+		FROM takku_order o
+		JOIN takku_funding f ON o.funding_id =
+		f.funding_id
+		WHERE f.product_id = #{productId}
+		AND o.status = '결제완료'
+		GROUP BY TO_CHAR(o.purchased_at, 'YYYY-MM')
+		ORDER BY month
+	</select>
+
+	<select id="selectProductAgeStats"
+		resultType="com.takku.project.domain.stats.LabelValueDTO">
+		SELECT CASE
+		WHEN age BETWEEN 10 AND 19 THEN '10대'
+		WHEN age BETWEEN 20 AND 29 THEN '20대'
+		WHEN age BETWEEN 30 AND 39 THEN '30대'
+		WHEN age BETWEEN 40 AND 49 THEN '40대'
+		ELSE '50대 이상'
+		END AS label,
+		COUNT(*) AS value
+		FROM (
+		SELECT u.user_id,
+		FLOOR(MONTHS_BETWEEN(SYSDATE, u.birth)/12) AS age
+		FROM takku_user u
+		JOIN takku_order o ON u.user_id = o.user_id
+		JOIN takku_funding f ON o.funding_id = f.funding_id
+		WHERE f.product_id = #{productId}
+		AND o.status = '결제완료'
+		)
+		GROUP BY CASE
+		WHEN age BETWEEN 10 AND 19 THEN '10대'
+		WHEN age BETWEEN 20 AND 29 THEN '20대'
+		WHEN age BETWEEN 30 AND 39 THEN '30대'
+		WHEN age BETWEEN 40 AND 49 THEN '40대'
+		ELSE '50대 이상'
+		END
+		ORDER BY label
+	</select>
+
+	<select id="selectProductGenderStats"
+		resultType="com.takku.project.domain.stats.LabelValueDTO">
+		SELECT u.gender AS label,
+		COUNT(*) AS value
+		FROM takku_user u
+		JOIN takku_order o ON u.user_id = o.user_id
+		JOIN takku_funding f ON o.funding_id = f.funding_id
+		WHERE f.product_id
+		= #{productId}
+		AND o.status = '결제완료'
+		GROUP BY u.gender
+	</select>
+
+	<!-- ================= 공통 ResultMap ================= -->
+
+	<resultMap id="AgeGenderTagMap"
+		type="com.takku.project.domain.stats.AgeGenderTagDTO">
+		<result property="ageGroup" column="age_group" />
+		<result property="gender" column="gender" />
+		<collection property="topTags" ofType="string">
+			<result column="tag_name" />
+		</collection>
+	</resultMap>
+
+</mapper>

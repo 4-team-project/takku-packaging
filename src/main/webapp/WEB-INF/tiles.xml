@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+
+<tiles-definitions>
+
+	<!-- 기본 레이아웃 정의 -->
+	<definition name="defaultLayout"
+		template="/WEB-INF/views/layout/layout.jsp">
+		<put-attribute name="header"
+			value="/WEB-INF/views/layout/main-header.jsp" />
+		<put-attribute name="footer"
+			value="/WEB-INF/views/layout/footer.jsp" />
+	</definition>
+
+	<!-- 마이페이지, 내 쿠폰함 레이아웃 정의 -->
+	<definition name="subLayout"
+		template="/WEB-INF/views/layout/layout.jsp">
+		<put-attribute name="header"
+			value="/WEB-INF/views/layout/sub-header.jsp" />
+		<put-attribute name="footer"
+			value="/WEB-INF/views/layout/footer.jsp" />
+	</definition>
+
+	<!-- 소상공인 레이아웃 정의 -->
+	<definition name="sellerLayout"
+		template="/WEB-INF/views/layout/sellerLayout.jsp">
+		<put-attribute name="header"
+			value="/WEB-INF/views/layout/seller-header.jsp" />
+		<put-attribute name="footer"
+			value="/WEB-INF/views/layout/footer.jsp" />
+	</definition>
+
+	<!-- 메인 -->
+	<definition name="main" extends="defaultLayout">
+		<put-attribute name="title" value="메인" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/main.jsp" />
+	</definition>
+
+	<!-- 로그인 -->
+	<definition name="auth.login" extends="subLayout">
+		<put-attribute name="title" value="딱쿠" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/pages/auth.jsp" />
+	</definition>
+
+	<!-- 회원가입 -->
+	<definition name="auth.signup" extends="subLayout">
+		<put-attribute name="title" value="딱쿠" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/pages/auth_signup.jsp" />
+	</definition>
+
+	<!-- 비밀번호 찾기 -->
+	<definition name="auth.findPassword" extends="subLayout">
+		<put-attribute name="title" value="딱쿠" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/pages/find_password.jsp" />
+	</definition>
+
+	<!-- 홈 -->
+	<definition name="user.home" extends="defaultLayout">
+		<put-attribute name="title" value="딱쿠" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/pages/user/home.jsp" />
+	</definition>
+
+	<!-- 펀딩 상세보기 -->
+	<definition name="user.funding_detail"
+		extends="defaultLayout">
+		<put-attribute name="title" value="딱쿠" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/pages/user/funding_detail.jsp" />
+	</definition>
+
+	<!-- 결제 완료/실패 -->
+	<definition name="user.payment" extends="defaultLayout">
+		<put-attribute name="title" value="딱쿠" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/pages/user/payment.jsp" />
+	</definition>
+
+	<!-- 내 쿠폰함 -->
+	<definition name="user.coupon" extends="subLayout">
+		<put-attribute name="title" value="딱쿠" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/pages/user/coupon.jsp" />
+	</definition>
+
+	<!-- 쿠폰 상세 정보 -->
+	<definition name="user.coupon_detail"
+		template="/WEB-INF/views/pages/user/coupon_detail.jsp" />
+
+	<!-- 마이페이지 -->
+	<definition name="user.mypage" extends="subLayout">
+		<put-attribute name="title" value="딱쿠" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/pages/user/mypage.jsp" />
+	</definition>
+
+	<!-- 소상공인 마이페이지 -->
+	<definition name="seller.mypage" extends="sellerLayout">
+		<put-attribute name="body"
+			value="/WEB-INF/views/pages/seller/mypage.jsp" />
+		<put-attribute name="title" value="딱쿠" />
+	</definition>
+
+	<!-- 결제하기 -->
+	<definition name="user.order" extends="subLayout">
+		<put-attribute name="title" value="딱쿠" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/pages/user/order.jsp" />
+	</definition>
+
+	<!-- 리뷰 작성 페이지 -->
+	<definition name="user.review"
+		template="/WEB-INF/views/pages/user/review.jsp" />
+
+	<!-- qr로 메뉴확인화면 -->
+	<definition name="coupon.sellerCheck"
+		template="/WEB-INF/views/pages/coupon/sellerCheck.jsp" />
+
+	<!-- 에러 -->
+	<definition name="error.error" extends="defaultLayout">
+		<put-attribute name="title" value="딱쿠" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/error/error.jsp" />
+	</definition>
+
+	<!-- 소상공인 홈 -->
+	<definition name="seller.home" extends="sellerLayout">
+		<put-attribute name="body"
+			value="/WEB-INF/views/pages/seller/home.jsp" />
+		<put-attribute name="title" value="딱쿠" />
+	</definition>
+
+	<!-- 소상공인 펀딩 만들기 -->
+	<definition name="seller.createFunding"
+		extends="sellerLayout">
+		<put-attribute name="body"
+			value="/WEB-INF/views/pages/seller/createFunding.jsp" />
+		<put-attribute name="title" value="딱쿠" />
+	</definition>
+
+	<definition name="seller.existMenu" extends="sellerLayout">
+		<put-attribute name="body"
+			value="/WEB-INF/views/pages/seller/create_existMenu.jsp" />
+		<put-attribute name="title" value="딱쿠" />
+	</definition>
+
+	<definition name="seller.normalFunding"
+		extends="sellerLayout">
+		<put-attribute name="body"
+			value="/WEB-INF/views/pages/seller/create_normalFunding.jsp" />
+		<put-attribute name="title" value="딱쿠" />
+	</definition>
+
+	<definition name="seller.insertDetail"
+		extends="sellerLayout">
+		<put-attribute name="body"
+			value="/WEB-INF/views/pages/seller/create_insertDetail.jsp" />
+		<put-attribute name="title" value="딱쿠" />
+	</definition>
+
+	<definition name="seller.selectWriteType"
+		extends="sellerLayout">
+		<put-attribute name="body"
+			value="/WEB-INF/views/pages/seller/select_writetype.jsp" />
+		<put-attribute name="title" value="딱쿠" />
+	</definition>
+
+	<definition name="seller.directInsert"
+		extends="sellerLayout">
+		<put-attribute name="body"
+			value="/WEB-INF/views/pages/seller/funding_direct_input.jsp" />
+		<put-attribute name="title" value="딱쿠" />
+	</definition>
+	<definition name="seller.aiInsertForm"
+		extends="sellerLayout">
+		<put-attribute name="body"
+			value="/WEB-INF/views/pages/seller/funding_ai_form.jsp" />
+		<put-attribute name="title" value="딱쿠" />
+	</definition>
+
+	<definition name="seller.aiInsertResult"
+		extends="sellerLayout">
+		<put-attribute name="body"
+			value="/WEB-INF/views/pages/seller/funding_ai_input.jsp" />
+		<put-attribute name="title" value="딱쿠" />
+	</definition>
+
+	<definition name="seller.result" extends="sellerLayout">
+		<put-attribute name="body"
+			value="/WEB-INF/views/pages/seller/funding_complete.jsp" />
+		<put-attribute name="title" value="딱쿠" />
+	</definition>
+
+	<!-- 상점관리 -->
+	<definition name="seller.storeManagement"
+		extends="sellerLayout">
+		<put-attribute name="body"
+			value="/WEB-INF/views/pages/seller/storeManagement.jsp" />
+		<put-attribute name="title" value="딱쿠" />
+	</definition>
+
+	<!-- 상품 추가/수정 -->
+	<definition name="seller.product" extends="sellerLayout">
+		<put-attribute name="body"
+			value="/WEB-INF/views/pages/seller/product/productDetail.jsp" />
+		<put-attribute name="title" value="딱쿠" />
+	</definition>
+
+	<!-- 상점 추가/수정 -->
+	<definition name="seller.store" extends="sellerLayout">
+		<put-attribute name="body"
+			value="/WEB-INF/views/pages/seller/store/storeDetail.jsp" />
+		<put-attribute name="title" value="딱쿠" />
+	</definition>
+
+	<!-- 상점 목록 -->
+	<definition name="seller.storeList" extends="sellerLayout">
+		<put-attribute name="body"
+			value="/WEB-INF/views/pages/seller/store/storeList.jsp" />
+		<put-attribute name="title" value="딱쿠" />
+	</definition>
+
+	<!-- 상품 목록 -->
+	<definition name="seller.productList" extends="sellerLayout">
+		<put-attribute name="body"
+			value="/WEB-INF/views/pages/seller/product/productList.jsp" />
+		<put-attribute name="title" value="딱쿠" />
+	</definition>
+
+	<definition name="seller/stats" extends="sellerLayout">
+		<put-attribute name="title" value="딱쿠" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/pages/seller/stats.jsp" />
+	</definition>
+
+	<definition name="seller/platformStats"
+		extends="sellerLayout">
+		<put-attribute name="title" value="딱쿠" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/pages/seller/platformStats.jsp" />
+	</definition>
+
+	<definition name="seller/productStats"
+		extends="sellerLayout">
+		<put-attribute name="title" value="딱쿠" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/pages/seller/productStats.jsp" />
+	</definition>
+
+	<definition name="seller/fundingStats"
+		extends="defaultLayout">
+		<put-attribute name="title" value="딱쿠" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/pages/seller/fundingStats.jsp" />
+	</definition>
+
+	<!-- 소상공인 펀딩 통계 -->
+	<definition name="seller/list" extends="sellerLayout">
+		<put-attribute name="title" value="딱쿠" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/pages/seller/seller_funding_list.jsp" />
+	</definition>
+	<!-- 소상공인 펀딩 상세 정보 -->
+	<definition name="seller/detail" extends="sellerLayout">
+		<put-attribute name="title" value="딱쿠" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/pages/seller/sellerFundingDetail.jsp" />
+	</definition>
+	<!-- 소상공인 펀딩 통계 -->
+	<definition name="seller/sellerFundingStats"
+		extends="sellerLayout">
+		<put-attribute name="title" value="딱쿠" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/pages/seller/sellerFundingStats.jsp" />
+	</definition>
+	<!-- 소상공인 펀딩 수정 step-1 -->
+	<definition name="seller/fundingFormStep1"
+		extends="sellerLayout">
+		<put-attribute name="title" value="딱쿠" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/pages/seller/fundingFormStep1.jsp" />
+	</definition>
+	<!-- 소상공인 펀딩 수정 step-2 -->
+	<definition name="seller/fundingFormStep2"
+		extends="sellerLayout">
+		<put-attribute name="title" value="딱쿠" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/pages/seller/fundingFormStep2.jsp" />
+	</definition>
+	<!-- 소상공인 정산 관리 -->
+	<definition name="seller.settlement" extends="sellerLayout">
+		<put-attribute name="title" value="딱쿠" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/pages/seller/settlements.jsp" />
+	</definition>
+	
+	<definition name="mysql.test" extends="subLayout">
+		<put-attribute name="title" value="MySQL 테스트" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/pages/mysql/mysql.jsp" />
+	</definition>
+
+
+</tiles-definitions>
+

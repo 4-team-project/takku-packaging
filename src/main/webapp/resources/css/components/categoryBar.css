@@ -1,0 +1,73 @@
+@import url('../base/fonts.css');
+
+.category-bar {
+	height : auto;
+	width: 160px;
+	min-width: 160px;
+	max-width: 160px;
+	flex-shrink: 0;
+	background-color: #FFF6F0;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	box-shadow: 2px 0 4px rgba(0, 0, 0, 0.05);
+	padding-top: 40px;
+}
+
+@media screen and (max-width: 768px) {
+	.category-bar {
+		display: none;
+	}
+}
+
+.emptyBox {
+	width: 82px;
+	height: 110px;
+}
+
+.title {
+	width: 82px;
+	height: 20px;
+	display: flex;
+	flex-direction: row; 
+	justify-content: center;   
+	align-items: center;     
+	cursor: pointer;
+}
+
+.category-text {
+	font-family: 'Spoqa Han Sans Neo';
+	font-weight: 700;
+	font-size: 16px;
+	color: #2E2E3A;
+	border: none;
+	outline: none;
+	background-color: transparent;
+}
+
+.category-box.selected .category-text {
+	color: #FF9670;
+}
+
+.title-img {
+	width: 16px;
+	height: 16px;
+	margin-left: 7px;
+	margin-top: 2px;
+}
+
+.category-box-list {
+	display: flex;
+	flex-direction: column;
+	gap: 24px;
+	margin-top: 20px;
+	align-items: center;
+	text-align: center;
+	align-items: center;
+}
+
+.category-box img {
+	width: 82px;
+	height: 82px;
+	object-fit: contain;
+}

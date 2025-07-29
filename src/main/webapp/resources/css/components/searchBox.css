@@ -1,0 +1,54 @@
+@import url('../base/fonts.css');
+
+.search-box {
+  width: 290px;
+  height: 48px;
+  border-radius: 18px;
+  border: 1px solid #DDE1E6;
+  background-color: #ffffff;
+  filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.08));
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  padding-left: 14px;
+  padding-right: 14px;
+}
+
+.search-text {
+  font-family: 'Spoqa Han Sans Neo';
+  font-weight: 500; 
+  font-size: 14px;
+  color: #828282;
+  flex-grow: 1;
+  border: none;
+  outline: none;
+  background-color: transparent;
+}
+
+.search-text::placeholder {
+  color: #AFAFAF;
+}
+
+.search-button {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.search-button-circle {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background-color: #FF9670;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.04));
+}
+
+.search-icon {
+  width: 14px;
+  height: 14px;
+}

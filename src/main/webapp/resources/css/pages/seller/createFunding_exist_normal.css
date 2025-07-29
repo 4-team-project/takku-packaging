@@ -1,0 +1,240 @@
+@charset "UTF-8";
+
+h3 {
+	font-size: 28px;
+	margin-bottom: 5px;
+}
+
+
+select {
+	cursor: inherit;
+}
+
+select:focus {
+	border-color: #FF9670;
+	box-shadow: 0 0 0 3px rgba(255, 150, 112, 1.0);
+	outline: none;
+}
+
+.menu-label, label {
+	font-weight: bold;
+	font-size: 25px;
+	margin-bottom: 10px;
+	color: #ff9670;
+	min-width: 600px;
+}
+
+.menuName, .menuPrice, .form-group {
+	padding: 20px 0 30px 0px;
+}
+
+.menu-select {
+	display: flex;
+	gap: 10px;
+}
+
+/* 메뉴를 선택해주세요. 박스 */
+#menuSelect {
+	padding: 14px 12px;
+	font-size: 24px;
+	border: 3px solid #DDDDDD;
+	border-radius: 8px;
+	min-width:400px;
+}
+
+/* 정보 수정 / 추가 버튼 */
+.btn-edit, .btn-add {
+	padding: 8px 14px;
+	border: 2px solid #ff9670;
+	background-color: transparent;
+	color: #ff9670;
+	border-radius: 6px;
+	font-size: 20px;
+	font-weight: bold;
+	transition: background-color 0.2s;
+	cursor: inherit;
+	min-width: 120px;
+}
+
+.unit-text {
+	font-size: 20px; /* 숫자보다 조금 크게 */
+	margin-left: 4px;
+}
+
+.btn-edit:hover, .btn-add:hover {
+	background-color: #ff9670;
+	color: white;
+}
+
+/* 인풋박스 */
+input[type="number"] {
+	min-width: 200px;
+	margin-top: 5px;
+	margin-bottom: 10px;
+	border: 3px solid #DDDDDD;
+	border-radius: 8px;
+	transition: border-color 0.2s, box-shadow 0.2s;
+	padding: 14px 12px;
+	font-size: 24px;
+	font-family: 'Spoqa Han Sans Neo';
+	cursor: inherit;
+}
+
+input::placeholder {
+	color: #ccc; /* 연한 회색. 필요하면 더 밝게: #ddd 또는 #eee */
+	opacity: 2; /* Firefox에서도 연하게 보이도록 */
+}
+
+.form-input {
+	border: 3px solid #ccc;
+	border-radius: 8px;
+	padding: 8px 12px;
+	font-size: 14px;
+	transition: all 0.2s ease-in-out;
+}
+
+.form-input:focus {
+	border-color: #FF9670;
+	box-shadow: 0 0 0 3px rgba(255, 150, 112, 0.2);
+	outline: none;
+}
+
+#discountRate, #minPrice {
+	font-weight: bold;
+	font-size: 20px;
+	margin-left: 5px;
+}
+
+.description {
+	font-size: 17px;
+}
+
+.btn-container {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	gap:300px;
+	padding-top: 20px;
+}
+
+.btn {
+	border: 2px solid #ff9670;
+	background: transparent;
+	color: #ff9670;
+	width: 200px;
+	border-radius: 6px;
+	font-size: 30px;
+	font-weight: bold;
+}
+
+.btn:hover {
+	background-color: #ff9670;
+	color: white;
+}
+
+#resultModal {
+	display: none;
+	position: fixed;
+	top: 40%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	background: #ffffff;
+	padding: 30px 30px 20px 30px;
+	border-radius: 12px;
+	box-shadow: 0 4px 12px rgba(255, 150, 112, 0.5); /* 주황색 느낌 그림자 */
+	z-index: 9999;
+	width: 400px;
+	text-align: center;
+	font-family: 'Noto Sans KR', sans-serif;
+}
+
+#resultModal p {
+	margin: 0;
+	font-size: 18px;
+	color: #ff9670; /* 진한 주황색 글씨 */
+	font-weight: bold;
+}
+
+#closeModalBtn {
+	margin-top: 20px;
+	padding: 8px 18px;
+	background-color: #ff9670; /* 주황색 버튼 */
+	color: white;
+	border: none;
+	border-radius: 8px;
+	font-weight: bold;
+	font-size: 20px;
+	transition: background-color 0.3s ease;
+}
+
+#closeModalBtn:hover {
+	background-color: #fdd4c2; /* 좀 더 밝은 주황색 호버 */
+}
+
+/* 모달 배경 */
+#modalBackdrop {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(0, 0, 0, 0.4);
+	z-index: 9998;
+	display: none;
+}
+
+/*progress bar*/
+.step-progress {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding-bottom: 10px;
+}
+
+.step {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	font-size: 16px;
+	color: #333;
+	width: 100px;
+	position: relative;
+}
+
+.circle {
+	width: 24px;
+	height: 24px;
+	border-radius: 50%;
+	border: 1px solid #ccc;
+	color: #999;
+	text-align: center;
+	line-height: 24px;
+	font-weight: bold;
+	background-color: #fff;
+	z-index: 2;
+}
+
+.step.active .circle {
+	background-color: #FF9670;
+	border: none;
+	color: white;
+}
+
+.label {
+	margin-top: 6px;
+}
+
+.line {
+	flex-grow: 1;
+	height: 1px;
+	background-color: #ccc;
+	margin: 0 10px;
+	position: relative;
+	top: -12px;
+}
+
+.step.active ~ .step .circle {
+	background-color: #fff;
+	color: #999;
+	border: 1px solid #ccc;
+}

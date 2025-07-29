@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.takku.project.mapper.OrderMapper">
+
+	<!-- 구매자 ID로 주문 조회 -->
+	<select id="selectByUserId" resultType="OrderDTO"
+		parameterType="int">
+		SELECT
+		o.order_id,
+		o.funding_id,
+		o.qty,
+		o.amount,
+		o.use_point,
+		o.discount_amount,
+		o.status,
+		o.funding_status,
+		o.purchased_at,
+		o.refund_at,
+		p.product_name
+		FROM takku_order o
+		JOIN
+		takku_funding f ON o.funding_id = f.funding_id
+		JOIN takku_product p ON
+		f.product_id = p.product_id
+		WHERE o.user_id = #{userId}
+		ORDER BY o.purchased_at DESC
+	</select>
+
+	<!-- 주문 생성 -->
+	<insert id="insertOrder" parameterType="OrderDTO">
+		<selectKey keyProperty="orderId" resultType="int"
+			order="BEFORE">
+			SELECT takku_order_seq.NEXTVAL FROM dual
+		</selectKey>
+		INSERT INTO takku_order (
+		order_id, user_id,
+		funding_id, qty, amount,
+		use_point,
+		discount_amount, payment_method,
+		status, funding_status,
+		purchased_at,
+		refund_at, imp_uid, merchant_uid
+		) VALUES (
+		#{orderId},
+		#{userId}, #{fundingId},
+		#{qty}, #{amount}, #{usePoint},
+		#{discountAmount},
+		'카드',
+		#{status},
+		#{fundingStatus}, SYSDATE, NULL,
+		#{impUid}, #{merchantUid}
+		)
+	</insert>
+
+	<!-- 주문 펀딩 상태 수정 -->
+	<update id="updateOrderFundingStatus" parameterType="int">
+		UPDATE
+		takku_order
+		SET status = '환불'
+		WHERE order_id =
+		#{orderId}
+	</update>
+
+	<!-- 주문 결제 상태 및 환불일 수정 -->
+	<update id="updateOrderRefundAtStatus" parameterType="OrderDTO">
+		UPDATE
+		takku_order
+		SET status = #{status},
+		refund_at = #{refundAt}
+		WHERE
+		order_id = #{orderId}
+	</update>
+
+	<!-- 결제에서 메뉴이름 가져오기 (고정) -->
+	<select id="getProductNameByOrderId" resultType="String">
+		SELECT
+		p.product_name
+		FROM takku_order o
+		JOIN takku_funding f ON o.funding_id =
+		f.funding_id
+		JOIN takku_product p ON f.product_id = p.product_id
+		WHERE
+		o.order_id = #{orderId}
+	</select>
+
+	<select id="selectOrderByOrderId" parameterType="int"
+		resultType="OrderDTO">
+		SELECT * FROM takku_order WHERE order_id = #{orderId}
+	</select>
+
+	<!-- 펀딩 이름 가져올거야 -->
+	<select id="getFundingNameByOrderId" parameterType="int"
+		resultType="String">
+		SELECT f.funding_name
+		FROM takku_order o
+		JOIN takku_funding f
+		ON o.funding_id = f.funding_id
+		WHERE o.order_id = #{orderId}
+	</select>
+
+	<!-- status 가져올거야 = -->
+	<select id="getOrdersByUserAndStatus" parameterType="map"
+		resultType="OrderDTO">
+		SELECT o.*, p.product_name
+		FROM takku_order o
+		JOIN
+		takku_funding f ON o.funding_id = f.funding_id
+		JOIN takku_product p ON
+		f.product_id = p.product_id
+		WHERE o.user_id = #{userId}
+		AND o.status =
+		#{status}
+		ORDER BY o.purchased_at DESC
+	</select>
+	
+	<select id="selectCompletedOrdersByFundingId"
+		parameterType="int" resultType="OrderDTO">
+		SELECT * FROM takku_order
+		WHERE funding_id = #{fundingId}
+		AND status = '결제완료'
+	</select>
+
+
+<select id="searchOrders" resultType="orderDTO">
+  SELECT
+    o.*,
+    p.product_name,
+    i.image_url
+  FROM takku_order o
+  JOIN takku_funding f ON o.funding_id = f.funding_id
+  JOIN takku_product p ON f.product_id = p.product_id
+  LEFT JOIN takku_image i ON i.funding_id = o.funding_id
+  WHERE o.user_id = #{userId}
+    AND (
+      LOWER(p.product_name) LIKE '%' || LOWER(#{keyword}) || '%'
+      OR LOWER(o.funding_status) LIKE '%' || LOWER(#{keyword}) || '%'
+    )
+  ORDER BY o.purchased_at DESC
+</select>
+
+</mapper>

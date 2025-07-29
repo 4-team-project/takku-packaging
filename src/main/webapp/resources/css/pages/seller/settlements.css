@@ -1,0 +1,120 @@
+@charset "UTF-8";
+
+h2 {
+	font-size: 25px;
+}
+
+.settlement-box {
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+	padding: 20px;
+}
+
+.settlement-card {
+	border: 3px solid #2e2e3a;
+	border-radius: 12px;
+	padding: 20px;
+	background-color: #fffbe6;
+	box-shadow: 6px 6px 0 #FF9670;
+}
+
+.settlement-inner {
+	display: flex;
+	align-items: center;
+	gap: 20px;
+	position: relative;
+}
+
+.settlement-img img {
+	width: 150px;
+	height: 150px;
+	object-fit: cover;
+	border-radius: 8px;
+	border: 1px solid #eee;
+}
+
+.settlement-info p {
+	margin: 6px 0;
+	font-size: 18px;
+	color: #444;
+}
+
+.settlement-info-grid {
+	display: grid;
+	grid-template-columns: 90px 1fr;
+	row-gap: 8px;
+	font-size: 18px;
+	max-width: 300px;
+}
+
+.settlement-info-grid strong {
+	font-weight: bold;
+	color: #ff9670;
+}
+
+.settlement-action {
+	margin-left: auto;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 100%;
+}
+
+.settlement-action button {
+	padding: 12px 24px; /* 버튼 크기 키움 */
+	font-size: 16px; /* 글자 크기 키움 */
+	background-color: #ff9670;
+	color: white;
+	border: none;
+	border-radius: 8px;
+	cursor: pointer;
+	transition: background-color 0.2s, transform 0.2s;
+}
+
+.settlement-action button:hover {
+	background-color: #ffb199;
+	transform: scale(1.05);
+}
+
+.pagination {
+	text-align: center;
+	margin-top: 20px;
+	display: flex;
+	justify-content: center;
+	gap: 10px;
+}
+
+.page-link {
+	border: 1px solid #ff9670;
+	background-color: white;
+	color: #333;
+	padding: 8px 14px;
+	font-size: 16px;
+	border-radius: 6px;
+	cursor: pointer;
+	transition: all 0.2s ease;
+}
+
+.page-link:hover:not(:disabled) {
+	background-color: #ffe3d8;
+}
+
+.page-link:disabled {
+	cursor: default;
+	opacity: 0.5;
+}
+
+.page-link.active {
+	background-color: #ff9670;
+	color: white;
+	font-weight: bold;
+	border: 1px solid #ff9670;
+}
+
+.no-settlement-message {
+	text-align: center;
+	font-size: 18px;
+	color: #888;
+	padding: 40px 0;
+}

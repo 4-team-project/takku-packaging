@@ -1,0 +1,12 @@
+[
+  { "id": 0, "name": "전체", "image": "/resources/images/logo.svg" },
+  { "id": 1, "name": "한식", "image": "/resources/images/category/korean-food.svg" },
+  { "id": 2, "name": "분식", "image": "/resources/images/category/tteokbokki.svg" },
+  { "id": 3, "name": "중식", "image": "/resources/images/category/dumpling.svg" },
+  { "id": 4, "name": "일식", "image": "/resources/images/category/sushi.svg" },
+  { "id": 5, "name": "양식", "image": "/resources/images/category/steak.svg" },
+  { "id": 6, "name": "아시안", "image": "/resources/images/category/rice-noodles.svg" },
+  { "id": 7, "name": "패스트푸드", "image": "/resources/images/category/hamburger.svg" },
+  { "id": 8, "name": "카페&디저트", "image": "/resources/images/category/cake.svg" },
+  { "id": 9, "name": "도시락", "image": "/resources/images/category/lunch-box.svg" }
+]

@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/tx https://www.springframework.org/schema/tx/spring-tx.xsd">
+
+	<!-- ================== 공통 설정 ================== -->
+	<!-- properties 읽기 -->
+	<bean
+		class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer">
+		<property name="location"
+			value="classpath:application.properties" />
+		<property name="fileEncoding" value="UTF-8" />
+	</bean>
+
+	<!-- component-scan -->
+	<context:component-scan
+		base-package="com.takku.project" />
+
+	<!-- 파일 업로드 -->
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="defaultEncoding" value="UTF-8" />
+		<property name="maxUploadSize" value="5242880" /> <!-- 5MB -->
+	</bean>
+
+	<!-- ================== 오라클 설정 ================== -->
+	<bean id="dataSourceOriginal"
+		class="org.apache.commons.dbcp2.BasicDataSource">
+		<property name="driverClassName"
+			value="${db.driverClassName}" />
+		<property name="url" value="${db.url}" />
+		<property name="username" value="${db.username}" />
+		<property name="password" value="${db.password}" />
+	</bean>
+
+	<!-- log4jdbc (선택) -->
+	<bean id="dataSource"
+		class="net.sf.log4jdbc.Log4jdbcProxyDataSource">
+		<constructor-arg ref="dataSourceOriginal" />
+		<property name="logFormatter">
+			<bean class="net.sf.log4jdbc.tools.Log4JdbcCustomFormatter">
+				<property name="loggingType" value="SINGLE_LINE" />
+				<property name="sqlPrefix" value="[ SQL문장 ] " />
+			</bean>
+		</property>
+	</bean>
+
+	<bean id="myBatisConfig"
+		class="org.apache.ibatis.session.Configuration">
+		<property name="mapUnderscoreToCamelCase" value="true" />
+	</bean>
+
+	<bean id="sqlSessionFactory"
+		class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="mapperLocations"
+			value="${mybatis.mapper-locations}" />
+		<property name="typeAliasesPackage"
+			value="${mybatis.type-aliases-package}" />
+		<property name="configuration" ref="myBatisConfig" />
+	</bean>
+
+	<bean id="sqlSession"
+		class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg ref="sqlSessionFactory" />
+	</bean>
+
+	<!-- Oracle Mapper -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="com.takku.project.mapper" />
+		<property name="sqlSessionFactoryBeanName"
+			value="sqlSessionFactory" />
+	</bean>
+
+	<!-- ================== MySQL 설정 ================== -->
+	<bean id="mysqlDataSource"
+		class="org.apache.commons.dbcp2.BasicDataSource">
+		<property name="driverClassName"
+			value="${mysql.driverClassName}" />
+		<property name="url" value="${mysql.url}" />
+		<property name="username" value="${mysql.username}" />
+		<property name="password" value="${mysql.password}" />
+	</bean>
+
+	<bean id="mysqlSqlSessionFactory"
+		class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="mysqlDataSource" />
+		<property name="mapperLocations"
+			value="classpath:mybatis/mysql-mappers/*.xml" />
+		<property name="typeAliasesPackage"
+			value="com.takku.project.mysql.domain" />
+	</bean>
+
+	<bean id="mysqlSqlSession"
+		class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg ref="mysqlSqlSessionFactory" />
+	</bean>
+
+	<!-- MySQL Mapper -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="com.takku.project.mysql" />
+		<property name="sqlSessionFactoryBeanName"
+			value="mysqlSqlSessionFactory" />
+	</bean>
+
+
+	<!-- ================== 트랜잭션 ================== -->
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" /> <!-- 오라클 기준 -->
+	</bean>
+
+	<tx:annotation-driven
+		transaction-manager="transactionManager" />
+
+</beans>

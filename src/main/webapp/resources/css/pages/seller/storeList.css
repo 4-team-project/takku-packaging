@@ -1,0 +1,94 @@
+* {
+	font-family: 'Spoqa Han Sans Neo';
+}
+
+.store-list {
+	display: flex;
+	flex-direction: column;
+	gap: 24px;
+}
+
+.store-card {
+	align-items: center;
+	background-color: #fffbe6;
+	border: 3px solid #2e2e3a;
+	border-radius: 12px;
+	padding: 20px 28px;
+	font-family: 'Spoqa Han Sans Neo';
+	box-shadow: 6px 6px 0 #FF9670;
+}
+
+.store-info-left {
+	display: flex;
+	flex-direction: column;
+}
+
+.store-info-middle {
+	display: flex;
+	justify-content: space-between;
+}
+
+.store-info-middle-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.store-title {
+	font-size: 24px;
+	font-weight: 700;
+	color: #2e2e3a;
+	display: flex;
+	align-items: center;
+	margin-bottom: 8px;
+}
+
+.store-detail {
+	font-size: 18px;
+	color: #555;
+	display: flex;
+	flex-direction: row;
+	display: flex;
+	align-items: center;
+}
+
+.store-detail-color {
+	font-size: 18px;
+	color: #FF9670;
+	font-weight: 700;
+	display: flex;
+	align-items: center;
+}
+
+.store-buttons {
+	display: flex;
+	gap: 12px;
+	margin-top: 16px;
+}
+
+.btn {
+	background-color: #FF9670;
+	border: 2px solid #2e2e3a;
+	padding: 14px 20px;
+	font-size: 18px;
+	font-weight: bold;
+	border-radius: 8px;
+	transition: 0.2s ease;
+}
+
+.btn-delete {
+	background-color: #f08080;
+	border: 2px solid #2e2e3a;
+	padding: 14px 20px;
+	font-size: 18px;
+	font-weight: bold;
+	border-radius: 8px;
+	transition: 0.2s ease;
+}
+
+.btn:hover {
+	background-color: #ffc2a1;
+}
+
+.btn-delete:hover {
+	background-color: #ffb6c1;
+}
