@@ -207,6 +207,30 @@ solapi.sender=010XXXXXXXX
 * **Swagger UI 접속 경로:**
   [http://localhost:9999/project/swagger](http://localhost:9999/project/swagger)
 
+---
+## 🧾 버전 정보 요약 (Version Info)
+
+| 구성 요소               | 버전        | 비고                     |
+| ------------------- | --------- | ---------------------- |
+| Java                | 11        | JDK 11 사용              |
+| Spring Framework    | 5.3.5     | Spring Legacy 기반       |
+| MyBatis             | 3.5.6     | + mybatis-spring 2.0.6 |
+| Servlet API         | 3.0.1     | JSP 기반 MVC             |
+| JSP                 | 2.1       |                        |
+| Tomcat              | 9.0       | WAR 배포용 컨테이너           |
+| Oracle JDBC         | 21.9.0.0  | ojdbc11                |
+| MySQL Connector     | 8.0.33    | 일부 테스트 환경에서 사용 가능      |
+| Groq API 모델         | qwen3-32b | AI 마케팅 문구 자동 생성        |
+| Jackson Databind    | 2.18.4    | JSON 처리                |
+| Gson                | 2.10.1    | Groq API 연동 시 사용       |
+| OkHttp              | 4.12.0    | 외부 API HTTP 통신         |
+| Swagger (Springfox) | 2.9.2     | REST API 문서 자동화        |
+| Lombok              | 1.18.34   | 코드 간결화                 |
+| JUnit Jupiter       | 5.10.0    | 단위 테스트                 |
+| Mockito             | 5.12.0    | 테스트용 Mock 객체 생성        |
+
+---
+
 > ※ 본 경로는 로컬 개발 환경 기준이며, `Tomcat`의 Context Path(`/project`)가 포함되어 있습니다.
 > API 엔드포인트 및 요청/응답 스펙은 Swagger를 통해 실시간으로 확인할 수 있습니다.
 
