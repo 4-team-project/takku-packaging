@@ -207,6 +207,10 @@ solapi.sender=010XXXXXXXX
 * **Swagger UI 접속 경로:**
   [http://localhost:9999/project/swagger](http://localhost:9999/project/swagger)
 
+
+> ※ 본 경로는 로컬 개발 환경 기준이며, `Tomcat`의 Context Path(`/project`)가 포함되어 있습니다.
+> API 엔드포인트 및 요청/응답 스펙은 Swagger를 통해 실시간으로 확인할 수 있습니다.
+
 ---
 ## 🧾 버전 정보 요약 (Version Info)
 
@@ -231,7 +235,3 @@ solapi.sender=010XXXXXXXX
 
 ---
 
-> ※ 본 경로는 로컬 개발 환경 기준이며, `Tomcat`의 Context Path(`/project`)가 포함되어 있습니다.
-> API 엔드포인트 및 요청/응답 스펙은 Swagger를 통해 실시간으로 확인할 수 있습니다.
-
----
