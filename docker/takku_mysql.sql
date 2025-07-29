@@ -27,9 +27,6 @@ CREATE TABLE user (
 
 -- 4. 더미 데이터 삽입
 INSERT INTO user (name) VALUES 
-('홍길동'),
-('김철수'),
-('이영희'),
 ('John Smith'),
 ('Emily Johnson'),
 ('Michael Brown'),
