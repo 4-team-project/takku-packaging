@@ -2,7 +2,11 @@ package com.takku.project.service;
 
 import java.sql.Date;
 import java.time.LocalDate;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -105,7 +109,6 @@ public class CouponService implements CouponMapper {
 						coupon.setCreatedAt(Date.valueOf(today));
 						coupon.setExpiredAt(Date.valueOf(today.plusMonths(6)));
 
-						int result = insertCoupon(coupon);
 					} catch (Exception e) {
 						log.error("쿠폰 발급 중 오류 발생");
 						log.error("userId: {}", userId);

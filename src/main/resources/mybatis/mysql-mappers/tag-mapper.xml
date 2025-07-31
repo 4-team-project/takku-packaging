@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.takku.project.mapper.TagMapper">
+
+  <!-- 펀딩 ID로 태그 이름 목록 조회 -->
+  <select id="selectTagNamesByFundingId" resultType="string" parameterType="int">
+    SELECT t.tag_name
+    FROM takku_tag t
+    JOIN takku_funding_tag ft ON t.tag_id = ft.tag_id
+    WHERE ft.funding_id = #{fundingId}
+  </select>
+
+  <!-- 태그 이름으로 태그 ID 조회 -->
+  <select id="selectTagIdByName" resultType="int" parameterType="string">
+    SELECT tag_id FROM takku_tag WHERE tag_name = #{tagName}
+  </select>
+
+  <!-- 태그 삽입 (MySQL에서는 시퀀스 대신 AUTO_INCREMENT 사용 또는 UUID) -->
+  <insert id="insertTag" parameterType="TagDTO" useGeneratedKeys="true" keyProperty="tagId">
+    INSERT INTO takku_tag (tag_name)
+    VALUES (#{tagName})
+  </insert>
+
+  <!-- 펀딩-태그 관계 삽입 -->
+  <insert id="insertFundingTag">
+    INSERT INTO takku_funding_tag (funding_id, tag_id)
+    VALUES (#{fundingId}, #{tagId})
+  </insert>
+
+</mapper>

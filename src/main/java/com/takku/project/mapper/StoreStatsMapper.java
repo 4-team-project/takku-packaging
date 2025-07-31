@@ -1,13 +1,13 @@
 package com.takku.project.mapper;
 
+import java.util.List;
+
 import com.takku.project.domain.stats.AgeGenderTagDTO;
 import com.takku.project.domain.stats.LabelValueDTO;
 import com.takku.project.domain.stats.OrderStatsDTO;
 import com.takku.project.domain.stats.PopularProductDTO;
 import com.takku.project.domain.stats.ProductRePurchaseDTO;
 import com.takku.project.domain.stats.TagStatsDTO;
-
-import java.util.List;
 
 public interface StoreStatsMapper {
 	List<OrderStatsDTO> selectMonthlyOrderStats(int storeId);

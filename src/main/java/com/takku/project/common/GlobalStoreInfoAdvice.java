@@ -9,8 +9,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
-import com.takku.project.domain.UserDTO;
 import com.takku.project.domain.StoreDTO;
+import com.takku.project.domain.UserDTO;
 import com.takku.project.service.StoreService;
 
 @ControllerAdvice

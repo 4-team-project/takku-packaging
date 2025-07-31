@@ -1,5 +1,10 @@
 package com.takku.project.service;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.takku.project.domain.stats.AgeGenderTagDTO;
 import com.takku.project.domain.stats.LabelValueDTO;
 import com.takku.project.domain.stats.OrderStatsDTO;
@@ -7,10 +12,6 @@ import com.takku.project.domain.stats.PopularProductDTO;
 import com.takku.project.domain.stats.ProductRePurchaseDTO;
 import com.takku.project.domain.stats.TagStatsDTO;
 import com.takku.project.mapper.StoreStatsMapper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class StoreStatsService {

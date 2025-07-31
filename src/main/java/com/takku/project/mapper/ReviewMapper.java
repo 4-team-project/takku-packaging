@@ -1,7 +1,6 @@
 package com.takku.project.mapper;
 
 import java.util.List;
-import java.util.Map;
 
 import com.takku.project.domain.ReviewDTO;
 

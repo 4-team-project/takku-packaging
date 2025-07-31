@@ -1,7 +1,9 @@
-package com.takku.project.mysql;
+package com.takku.project.mapper;
 
 import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
+
 import com.takku.project.domain.User;
 
 @Mapper

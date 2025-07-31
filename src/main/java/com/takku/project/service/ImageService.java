@@ -14,10 +14,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.takku.project.domain.FundingDTO;
 import com.takku.project.domain.ImageDTO;
-import com.takku.project.domain.ProductDTO;
-import com.takku.project.domain.ReviewDTO;
 import com.takku.project.mapper.ImageMapper;
 
 @Service

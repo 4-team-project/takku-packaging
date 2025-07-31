@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.takku.project.mapper.ProductMapper">
+
+	<!-- ResultMap: Product + 이미지 + 평점 -->
+	<resultMap id="ProductWithImagesMap" type="com.takku.project.domain.ProductDTO">
+		<id property="productId" column="product_id" />
+		<result property="storeId" column="store_id" />
+		<result property="productName" column="product_name" />
+		<result property="price" column="price" />
+		<result property="description" column="description" />
+		<result property="createdAt" column="created_at" />
+		<result property="averageRating" column="average_rating" />
+		<collection property="images" ofType="com.takku.project.domain.ImageDTO">
+			<id property="imageId" column="image_id" />
+			<result property="productId" column="product_id" />
+			<result property="imageUrl" column="image_url" />
+		</collection>
+	</resultMap>
+
+	<!-- 1. 상품 등록 (MySQL에서는 AUTO_INCREMENT 사용) -->
+	<insert id="insertProduct" parameterType="com.takku.project.domain.ProductDTO">
+		INSERT INTO takku_product (
+			store_id,
+			product_name,
+			price,
+			description,
+			created_at
+		) VALUES (
+			#{storeId},
+			#{productName},
+			#{price},
+			#{description},
+			NOW()
+		)
+	</insert>
+
+	<!-- 2. 상점 ID로 상품 목록 조회 -->
+	<select id="selectProductByStoreId" parameterType="int" resultMap="ProductWithImagesMap">
+		SELECT
+			p.product_id,
+			p.store_id,
+			p.product_name,
+			p.price,
+			p.description,
+			p.created_at,
+			(
+				SELECT ROUND(AVG(r.rating), 1)
+				FROM takku_review r
+				WHERE r.product_id = p.product_id
+			) AS average_rating,
+			i.image_id,
+			i.image_url
+		FROM takku_product p
+		LEFT JOIN takku_image i ON p.product_id = i.product_id
+		WHERE p.store_id = #{storeId}
+	</select>
+
+	<!-- 3. 상품 수정 -->
+	<update id="updateProduct" parameterType="com.takku.project.domain.ProductDTO">
+		UPDATE takku_product
+		SET
+			product_name = #{productName},
+			price = #{price},
+			description = #{description}
+		WHERE product_id = #{productId}
+	</update>
+
+	<!-- 4. 상품 삭제 -->
+	<delete id="deleteProduct" parameterType="int">
+		DELETE FROM takku_product WHERE product_id = #{productId}
+	</delete>
+
+	<!-- 5. 상품 ID로 단건 조회 -->
+	<select id="selectByProductId" parameterType="int" resultMap="ProductWithImagesMap">
+		SELECT
+			p.product_id,
+			p.store_id,
+			p.product_name,
+			p.price,
+			p.description,
+			p.created_at,
+			(
+				SELECT ROUND(AVG(r.rating), 1)
+				FROM takku_review r
+				WHERE r.product_id = p.product_id
+			) AS average_rating,
+			i.image_id,
+			i.image_url
+		FROM takku_product p
+		LEFT JOIN takku_image i ON p.product_id = i.product_id
+		WHERE p.product_id = #{productId}
+	</select>
+
+</mapper>

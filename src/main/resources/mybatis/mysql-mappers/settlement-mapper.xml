@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
@@ -21,7 +20,7 @@
 		#{fee},
 		#{amount},
 		#{status},
-		SYSDATE
+		NOW()
 		)
 	</insert>
 
@@ -45,7 +44,7 @@
 	<update id="updateSettlementStatus" parameterType="map">
 		UPDATE takku_settlement
 		SET status = #{status},
-		settled_at = SYSDATE
+		settled_at = NOW()
 		WHERE settlement_id = #{settlementId}
 	</update>
 
@@ -64,23 +63,27 @@
 		WHERE settlement_id = #{settlementId}
 	</select>
 
-	<!-- 페이지 처리 -->
+	<!-- 5. 페이징 처리 (MySQL 방식) -->
 	<select id="selectSettlementByStoreIdWithPaging"
 		parameterType="map" resultType="SettlementDTO">
-		SELECT * FROM (
-		SELECT ROWNUM AS rn, s.*
-		FROM (
-		SELECT * FROM takku_settlement
+		<!-- null 방지를 위한 bind -->
+		<bind name="safePageSize"
+			value="pageSize == null ? 10 : pageSize" />
+		<bind name="safeOffset" value="offset == null ? 0 : offset" />
+
+		SELECT *
+		FROM takku_settlement
 		WHERE store_id = #{storeId}
 		ORDER BY settled_at DESC
-		) s
-		WHERE ROWNUM &lt;= #{endRow}
-		)
-		WHERE rn &gt;= #{startRow}
+		LIMIT #{safePageSize} OFFSET #{safeOffset}
 	</select>
 
+	<!-- 6. 총 정산 개수 -->
 	<select id="countSettlementByStoreId" parameterType="int"
 		resultType="int">
-		SELECT COUNT(*) FROM takku_settlement WHERE store_id = #{storeId}
+		SELECT COUNT(*)
+		FROM takku_settlement
+		WHERE store_id = #{storeId}
 	</select>
+
 </mapper>

@@ -1,26 +1,36 @@
 package com.takku.project.service;
 
+import java.security.cert.X509Certificate;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
+
+import org.springframework.beans.factory.DisposableBean;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
+
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.takku.project.domain.*;
+import com.takku.project.domain.AIResponse;
+import com.takku.project.domain.FundingDTO;
+import com.takku.project.domain.FundingPromotionRequestDto;
+import com.takku.project.domain.ProductDTO;
+import com.takku.project.domain.StoreDTO;
 import com.takku.project.domain.stats.SummaryResponse;
 
 import lombok.RequiredArgsConstructor;
-import okhttp3.*;
-
-import java.util.List;
-import java.util.concurrent.TimeUnit;
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.TrustManager;
-import javax.net.ssl.X509TrustManager;
-import java.security.cert.X509Certificate;
-
-import org.springframework.beans.factory.DisposableBean;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Protocol;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 @Service
 @RequiredArgsConstructor
