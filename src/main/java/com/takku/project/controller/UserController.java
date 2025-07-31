@@ -26,11 +26,11 @@ public class UserController {
 
 	@Autowired
 	OrderService orderService;
-	
+
 	@Autowired
 	UserService userService;
-	
-	
+
+
 	@GetMapping("/mypage")
 	public String myPage(Model model, HttpSession session) {
 		// 페이지명 전달
@@ -52,14 +52,14 @@ public class UserController {
 //				.qty(1).amount(15000).usePoint(1000).discountAmount(1000).status("결제완료").paymentMethod("카드")
 //				.fundingStatus("펀딩 진행 중").purchasedAt(Date.valueOf("2025-06-12")).build());
 
-		
+
 		//위에서 userid 세션에서 꺼내오는 거 나중에 추가하기
 		// 모델에 테스트 데이터 넣기
-		
-		
+
+
 		UserDTO loginUser = (UserDTO) session.getAttribute("loginUser");
 	    model.addAttribute("user", loginUser);
-	    
+
 	    model.addAttribute("orderList", orderService.selectByUserId(loginUser.getUserId()));
 
 
@@ -70,9 +70,9 @@ public class UserController {
 	@ResponseBody  // 이걸 붙이면 리턴값이 View 이름이 아니라 응답 본문으로 간다
 	public String updateUser(HttpServletRequest request, HttpSession session) {
 	    //UserDTO user = (UserDTO) session.getAttribute("loginUser");
-		
+
 		UserDTO user = (UserDTO) session.getAttribute("loginUser");
-		if (user == null) return "0"; 
+		if (user == null) return "0";
 
 	    String nickname = request.getParameter("nickname");
 	    String password = request.getParameter("password");
@@ -90,7 +90,7 @@ public class UserController {
 	        if (!password.equals(passwordConfirm)) {
 	            return "-1";  // 비밀번호 불일치
 	        }
-	        user.setPassword(password); 
+	        user.setPassword(password);
 	    }
 
 	    // 주소

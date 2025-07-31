@@ -105,7 +105,7 @@ public class CouponService implements CouponMapper {
 						coupon.setStoreId(funding.getStoreId());
 						coupon.setCouponCode("TK" + UUID.randomUUID().toString().substring(0, 10).toUpperCase());
 						coupon.setUseStatus("미사용");
-						coupon.setReviewed(0); 
+						coupon.setReviewed(0);
 						coupon.setCreatedAt(Date.valueOf(today));
 						coupon.setExpiredAt(Date.valueOf(today.plusMonths(6)));
 

@@ -22,7 +22,7 @@ public interface ImageMapper {
 
 	// 상품 이미지 조회
 	List<ImageDTO> selectImagesByProductId(int productId);
-	
-	int updateFundingIdByImageId(@Param("imageId") Integer imageId, 
+
+	int updateFundingIdByImageId(@Param("imageId") Integer imageId,
             @Param("fundingId") Integer fundingId);
 }

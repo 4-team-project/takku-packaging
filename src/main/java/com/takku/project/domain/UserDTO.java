@@ -28,5 +28,5 @@ public class UserDTO {
     private Date createdAt;
     private Integer point;
     private String fundingType;
-    
+
 }

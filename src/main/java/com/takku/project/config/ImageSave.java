@@ -6,7 +6,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 public class ImageSave implements WebMvcConfigurer {
-	
+
+	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/upload/takku/**")
                 .addResourceLocations("file:///C:/upload/takku/");

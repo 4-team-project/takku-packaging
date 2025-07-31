@@ -68,7 +68,7 @@ public class ProductManagementController {
 	                       @RequestHeader(value = "Referer", required = false) String referer,
 	                       Model model) {
 	    model.addAttribute("storeId", storeId);
-	    model.addAttribute("redirectUrl", referer); 
+	    model.addAttribute("redirectUrl", referer);
 	    return "seller.product";
 	}
 

@@ -15,7 +15,7 @@ public class GlobalModelAttribute {
     public UserDTO loginUser(HttpSession session) {
         return (UserDTO) session.getAttribute("loginUser");
     }
-	
+
 	@ModelAttribute("store")
     public StoreDTO addStore(HttpSession session) {
         return (StoreDTO) session.getAttribute("store");

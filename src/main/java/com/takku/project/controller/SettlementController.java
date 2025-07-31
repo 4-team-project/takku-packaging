@@ -25,10 +25,10 @@ import com.takku.project.service.SettlementService;
 @Controller
 @RequestMapping("/seller/settlements")
 public class SettlementController {
-	
+
 	@Autowired
 	private SettlementService settlementService;
-	
+
 	@Autowired
 	private FundingService fundingService;
 
@@ -38,7 +38,7 @@ public class SettlementController {
 		model.addAttribute("userDTO", loginUser);
 		return "seller.settlement";
 	}
-	
+
 	@GetMapping("/list")
 	@ResponseBody
 	public Map<String, Object> getSettlementsByStore(
@@ -46,7 +46,7 @@ public class SettlementController {
 	        @RequestParam(defaultValue = "1") int page,
 	        @RequestParam(defaultValue = "5") int size) {
 
-	    int storeId = currentStore.getStoreId(); 
+	    int storeId = currentStore.getStoreId();
 
 	    int startRow = (page - 1) * size + 1;
 	    int endRow = page * size;

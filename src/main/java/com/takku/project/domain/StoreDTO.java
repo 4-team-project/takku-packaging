@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class StoreDTO {
-  
+
 	private Integer storeId;
 	private Integer userId;
 	private String businessNumber;

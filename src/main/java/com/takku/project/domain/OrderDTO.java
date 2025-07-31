@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class OrderDTO {
-   
+
 	private Integer orderId;
 	private Integer userId;
 	private Integer fundingId;
@@ -31,5 +31,5 @@ public class OrderDTO {
 	private String impUid;
 	private String merchantUid;
 	private List<ImageDTO> images;
-	
-}	
+
+}

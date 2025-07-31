@@ -35,7 +35,7 @@ public class ProductService {
 	public ProductDTO selectByProductId(Integer productId) {
 		return sqlSession.selectOne(namespace + "selectByProductId", productId);
 	}
-	
+
 	//상점ID로 상품 가져오기
 	public List<ProductDTO> selectProductByStoreId(int storeId) {
 	    return sqlSession.selectList(namespace  + "selectProductByStoreId", storeId);

@@ -19,7 +19,7 @@ import com.takku.project.mapper.ImageMapper;
 
 @Service
 public class ImageService {
-	
+
 	@Autowired
 	private ImageMapper imageMapper;
 
@@ -93,7 +93,7 @@ public class ImageService {
 			e.printStackTrace();
 			return null;
 		}
-	} 
+	}
 
 	public void updateFundingIdByImageId(Integer imageId, Integer fundingId) {
 		Map<String, Object> params = new HashMap<>();
@@ -102,7 +102,7 @@ public class ImageService {
 		imageMapper.updateFundingIdByImageId(imageId, fundingId);
 	}
 
-	//로컬 사진 저장 + DB 사진 저장 
+	//로컬 사진 저장 + DB 사진 저장
 	  public List<ImageDTO> storeImages(MultipartFile[] files, Integer productId, Integer fundingId, Integer reviewId) {
 	        List<ImageDTO> savedImages = new ArrayList<>();
 
@@ -134,7 +134,7 @@ public class ImageService {
 
 	        return savedImages;
 	    }
-	
+
 
 
 	public int insertImageUrl(ImageDTO image) {
@@ -160,7 +160,7 @@ public class ImageService {
 		return imagelist;
 	}
 
-	
+
 	public List<ImageDTO> selectImagesByProductId(int productId) {
 		List<ImageDTO> imagelist = sqlSession.selectList(namespace + "selectImagesByProductId", productId);
 		return imagelist;

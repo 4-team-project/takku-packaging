@@ -92,7 +92,7 @@ public class AuthController {
 			// 소상공인
 			else {
 				List<StoreDTO> storeList = storeService.selectStoreListByUserId(user.getUserId());
-				
+
 				session.setAttribute("storeList", storeList);
 
 				if (storeList != null && !storeList.isEmpty()) {

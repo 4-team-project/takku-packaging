@@ -385,7 +385,7 @@ public class StoreController {
 		// 일 평균 펀딩 금액 계산 (추가)
 		double averageDailyFundingAmount = 0.0;
 		if (totalDays != null && totalDays > 0) {
-			averageDailyFundingAmount = (double) totalSalesQuantity * salePrice / totalDays;
+			averageDailyFundingAmount = totalSalesQuantity * salePrice / totalDays;
 		}
 		model.addAttribute("averageDailyFundingAmount", averageDailyFundingAmount);
 

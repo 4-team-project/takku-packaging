@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CouponDTO {
-  
+
 	private Integer couponId;
 	private Integer fundingId;
 	private Integer userId;

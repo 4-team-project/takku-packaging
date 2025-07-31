@@ -45,15 +45,15 @@ public class OrderController {
 
 	@Autowired
 	private UserService userService;
-	
+
 	@Autowired
 	private ImageService imageService;
-	
+
 	@Value("${iamport.api.key}")
     private String iamportApiKey;
-	
 
-	
+
+
 	// 주문 폼
 	@GetMapping
 	public String orderForm(@RequestParam int fundingId, @RequestParam int quantity, @RequestParam int totalPrice,
@@ -63,7 +63,7 @@ public class OrderController {
 		if (loginUser == null) {
 	        return "redirect:/auth/login";
 	    }
-		
+
 		model.addAttribute("pageName", "결제하기");
 		model.addAttribute("funding", funding);
 		model.addAttribute("store", store);
@@ -73,7 +73,7 @@ public class OrderController {
 		model.addAttribute("iamportApiKey", iamportApiKey);
 		return "user.order";
 	}
-	
+
 	// 주문 처리
     @PostMapping("/payment")
     public String processOrder(@RequestParam int fundingId, @RequestParam int quantity, @RequestParam int totalPrice,
@@ -116,7 +116,7 @@ public class OrderController {
 		model.addAttribute("isSuccess", success);
 		return "user.payment";
 	}
-	
+
 
 	@GetMapping("/detail")
 	@ResponseBody
@@ -142,9 +142,9 @@ public class OrderController {
 		if ("allbuylist".equals(status)) {
 			orderList = orderService.selectByUserId(loginUser.getUserId()); // 전체 조회
 		} else if ("complete".equals(status)) {
-			orderList = orderService.getOrdersByUserAndStatus(loginUser.getUserId(), "결제완료"); 
+			orderList = orderService.getOrdersByUserAndStatus(loginUser.getUserId(), "결제완료");
 		} else if ("cancel".equals(status)) {
-			orderList = orderService.getOrdersByUserAndStatus(loginUser.getUserId(), "환불"); 
+			orderList = orderService.getOrdersByUserAndStatus(loginUser.getUserId(), "환불");
 		} else if ("null".equals(status)) {
 			orderList = orderService.selectByUserId(loginUser.getUserId());
 		}
@@ -158,7 +158,7 @@ public class OrderController {
 	public Map<String, Object> updateOrderFundingStatus(@RequestParam("orderId") Integer orderId) {
 	    Map<String, Object> result = new HashMap<>();
 	    OrderDTO order = orderService.selectOrderByOrderId(orderId);
-	    
+
 	    if (order == null) {
 	        result.put("success", false);
 	        result.put("message", "해당 주문을 찾을 수 없습니다.");
@@ -180,22 +180,22 @@ public class OrderController {
 
 	    return result;
 	}
-	
+
 	//검색하기
 	@PostMapping("/search")
 	public ResponseEntity<List<OrderDTO>> searchOrders(@RequestBody Map<String, String> body,
 	    @SessionAttribute("loginUser") UserDTO loginUser) {
-	    
+
 	    String keyword = body.get("keyword");
 	    int userId = loginUser.getUserId();
 
 	    List<OrderDTO> list = orderService.searchOrders(userId, keyword);
 
-		  for (OrderDTO order : list) { 
-			  List<ImageDTO> images = imageService.selectImagesByFundingId(order.getFundingId()); 	
-			  order.setImages(images); 
+		  for (OrderDTO order : list) {
+			  List<ImageDTO> images = imageService.selectImagesByFundingId(order.getFundingId());
+			  order.setImages(images);
 		}
-    
+
 	    return ResponseEntity.ok(list);
 
 }

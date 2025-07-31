@@ -203,14 +203,14 @@ public class FundingService {
 	public int selectProductIdByFundingId(int fundingId) {
 		return sqlSession.selectOne(namespace + "selectProductIdByFundingId", fundingId);
 	}
-	
+
 	public int increaseCurrentQty(int fundingId, int quantity) {
         Map<String, Object> param = new HashMap<>();
         param.put("fundingId", fundingId);
         param.put("quantity", quantity);
         return sqlSession.update(namespace + "increaseCurrentQty", param);
 	}
-	
+
 	public int decreaseCurrentQty(int fundingId, int quantity) {
 		Map<String, Object> param = new HashMap<>();
 		param.put("fundingId", fundingId);

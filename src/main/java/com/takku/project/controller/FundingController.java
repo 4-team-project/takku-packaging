@@ -197,7 +197,7 @@ public class FundingController {
 		        : Arrays.asList("진행중");
 		List<FundingDTO> fundingList = fundingService.getFundingsByConditionWithPaging(
 				keywordList, categoryId, sido, sigungu, statusList, "latest", page, size);
-		
+
 		int total = fundingService.getFundingCountByCondition(keywordList, categoryId, sido, sigungu, statusList);
 		int totalPages = (int) Math.ceil((double) total / size);
 
@@ -284,7 +284,7 @@ public class FundingController {
 
 		int totalReviews = reviewService.countByProductId(funding.getProductId());
 		int totalPages = (int) Math.ceil((double) totalReviews / size);
-		List<ReviewDTO> reviewList = reviewService.reviewByProductIdWithPaging(funding.getProductId(), page, size);		
+		List<ReviewDTO> reviewList = reviewService.reviewByProductIdWithPaging(funding.getProductId(), page, size);
 
 		return Map.of("reviewlist", reviewList, "totalPages", totalPages, "currentPage", page);
 
@@ -294,8 +294,8 @@ public class FundingController {
 	@GetMapping("/list")
 	public String selectFundingListByStatus(@RequestParam("status") String status, Model model,HttpSession session) {
 		UserDTO loginUser = (UserDTO) session.getAttribute("loginUser");
-		
-		
+
+
 		if ("allfundinglist".equals(status)) {
 			status = null; // 전체 조회 - 조건에서 status 제외
 		} else if ("progressing".equals(status)) {

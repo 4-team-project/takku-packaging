@@ -18,8 +18,8 @@ public interface SettlementMapper {
 
     // 4. ���� �� ��ȸ
     SettlementDTO selectSettlementById(Integer settlementId);
-    
+
     List<SettlementDTO> selectSettlementByStoreIdWithPaging(int storeId, int startRow, int endRow);
-    
+
     int countSettlementByStoreId(int storeId);
 }

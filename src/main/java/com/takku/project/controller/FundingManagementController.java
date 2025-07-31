@@ -98,7 +98,7 @@ public class FundingManagementController {
 	public String insertFundingMenuDetail(@ModelAttribute FundingDTO fundingInput, HttpSession session, Model model) {
 		FundingDTO funding = (FundingDTO) session.getAttribute("funding");
 		StoreDTO store = (StoreDTO) session.getAttribute("store");
-		
+
 		model.addAttribute("storeDTO", store);
 
 		funding.setProductId(fundingInput.getProductId());
@@ -139,21 +139,21 @@ public class FundingManagementController {
 					if (fileName != null && fileName.contains(".")) {
 						processedImages.add(
 							ImageDTO.builder()
-								.imageId(img.getImageId())  
+								.imageId(img.getImageId())
 								.imageUrl(fileName)
 								.build()
 						);
 					}
 				}
 			}
-			
+
 			System.out.println("✔️ 이미지 목록 확인");
 			if (fundingInput.getImages() != null) {
 				for (ImageDTO img : fundingInput.getImages()) {
 					System.out.println("🖼️ imageId: " + img.getImageId() + ", imageUrl: " + img.getImageUrl());
 				}
 			}
-			
+
 			funding.setImages(processedImages);
 
 			Date today = new Date();
@@ -326,7 +326,7 @@ public class FundingManagementController {
 	public String editFundingForm(@PathVariable int fundingId, Model model) {
 		FundingDTO funding = fundingService.selectFundingByFundingId(fundingId);
 		model.addAttribute("fundingDTO", funding);
-		
+
 		return "seller_funding_edit";
 	}
 
