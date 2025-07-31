@@ -27,9 +27,9 @@ public class LoginFilter implements Filter {
 
         // 로그인 없이 접근 가능한 경로 예외 처리
         if (path.startsWith(cpath + "/auth") ||
-            path.startsWith(cpath + "/mysql/test") ||
-            path.startsWith(cpath + "/resources") ||
-            path.startsWith(cpath + "/favicon.ico")) {
+        	    path.startsWith(cpath + "/mysql") ||
+        	    path.startsWith(cpath + "/resources") ||
+        	    path.startsWith(cpath + "/favicon.ico")) {
             chain.doFilter(request, response);
             return;
         }

@@ -4,8 +4,26 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.takku.project.mysql.MysqlTestMapper">
+
     <select id="selectAll" resultType="com.takku.project.domain.User">
         SELECT * FROM user;
     </select>
+
+    <select id="selectById" parameterType="long" resultType="com.takku.project.domain.User">
+        SELECT * FROM user WHERE id = #{id};
+    </select>
+
+    <insert id="insertUser" parameterType="com.takku.project.domain.User">
+        INSERT INTO user (name) VALUES (#{name});
+    </insert>
+
+    <update id="updateUser" parameterType="com.takku.project.domain.User">
+        UPDATE user SET name = #{name} WHERE id = #{id};
+    </update>
+
+    <delete id="deleteUser" parameterType="long">
+        DELETE FROM user WHERE id = #{id};
+    </delete>
+
 </mapper>
 

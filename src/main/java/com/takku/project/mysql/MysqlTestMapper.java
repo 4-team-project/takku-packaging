@@ -7,4 +7,8 @@ import com.takku.project.domain.User;
 @Mapper
 public interface MysqlTestMapper {
     List<User> selectAll();
+    User selectById(Long id);
+    void insertUser(User user);
+    void updateUser(User user);
+    void deleteUser(Long id);
 }
