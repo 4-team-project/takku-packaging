@@ -1,0 +1,10 @@
+- name: demo-cd
+  hosts: 10.0.3.11
+  become: true
+
+  tasks:
+    - name: Clone from codelab
+      ansible.builtin.git:
+        repo: 'https://github.com/4-team-project/takku-packaging.git'
+        dest: /tmp/jin/takku
+

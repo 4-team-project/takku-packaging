@@ -1,0 +1,12 @@
+FROM docker.io/library/tomcat:9.0.82-jdk11
+
+MAINTAINER "CHOI GOOKHYUN <tang@dustbox.kr>"
+
+RUN rm -rf /usr/local/tomcat/webapps/
+
+EXPOSE 9090
+
+ADD docker/server.xml /usr/local/tomcat/conf/server.xml
+ADD docker/mysql-connector-java-8.0.33.jar /usr/local/tomcat/lib/
+ADD target/project-1.0.0-BUILD-SNAPSHOT.war /usr/local/tomcat/webapps/ROOT.war
+
